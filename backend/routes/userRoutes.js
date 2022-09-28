@@ -1,11 +1,11 @@
 const express = require('express')
 const bcrypt = require('bcryptjs')
 const {
-  findall,
-  login,
-  register,
-  update,
-  findOne,
+  findallUsers,
+  loginUser,
+  registerUser,
+  updateUser,
+  findOneUser,
   getAllUsersNotMe,
 } = require("../controllers/userController.js");
 
@@ -13,7 +13,7 @@ const UserRouter = express.Router();
 
 //for login user
 UserRouter.post("/login", async (req, res) => {
-    const user = await login(req);
+    const user = await loginUser(req);
     //if user exists
     if(user) {
         if(bcrypt.compareSync(req.body.password, user.password)) {
@@ -34,7 +34,7 @@ UserRouter.post("/login", async (req, res) => {
 
 //for register user
 UserRouter.post("/register", async (req, res) => {
-    const user = await register(req);
+    const user = await registerUser(req);
     res.send({
         _id: user._id,
         name: user.name,
@@ -48,16 +48,16 @@ UserRouter.post("/register", async (req, res) => {
 
 //for update users
 UserRouter.put("/update", async (req, res) => {
-        const updateUser = await update(req);
-        if (updateUser) {
+        const updatedUser = await updateUser(req);
+        if (updatedUser) {
           res.send({
-            _id: updateUser._id,
-            name: updateUser.name,
-            email: updateUser.email,
-            address: updateUser.address,
-            phone: updateUser.phone,
-            image: updateUser.image,
-            isAdmin: updateUser.isAdmin,
+            _id: updatedUser._id,
+            name: updatedUser.name,
+            email: updatedUser.email,
+            address: updatedUser.address,
+            phone: updatedUser.phone,
+            image: updatedUser.image,
+            isAdmin: updatedUser.isAdmin,
           });
         } else {
           res.status(401).send({ message: "User not Found!" });
@@ -67,13 +67,13 @@ UserRouter.put("/update", async (req, res) => {
 //for all users
 UserRouter.get("/all", async (req, res) => {
 
-    const users = await findall();
+    const users = await findallUsers();
     res.send(users);
 });
 
 //get user by id
 UserRouter.get('/user/:id', async (req, res) => {
-    const user = await findOne(req.params.id);
+    const user = await findOneUser(req.params.id);
     if(user) {
         res.send(user)
     } else {
