@@ -96,7 +96,7 @@ export default function ChatContainer({ currentChat, socket }) {
         </div>
       </div>
       <div className="chat-messages">
-        {messages.map((message) => {
+        {messages.length !== 0 && messages.map((message) => {
           return (
             <div ref={scrollRef} key={uuidv4()}>
               <div
