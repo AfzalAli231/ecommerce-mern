@@ -25,8 +25,7 @@ const Order = () => {
         const {data} = await axios.get(`/api/orders/${id}`);
         
         setOrder(data);
-  
-        
+
   
       } catch(err) {
           alert("Order not found!");
