@@ -23,7 +23,7 @@ const ordersById = (id) => {
 };
 
 const orderById = (id) => {
-  const orders = Order.find({ _id: id });
+  const orders = Order.findById(id);
   return orders;
 };
 
