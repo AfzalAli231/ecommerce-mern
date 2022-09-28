@@ -50,7 +50,7 @@ const Header = () => {
             Sellers
           </NavLink>
           <NavLink to="/chat" activeclassname="active">
-            Chat
+            Chat With Others
           </NavLink>
         </div>
         <div className="header-action">
