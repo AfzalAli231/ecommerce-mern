@@ -1,24 +1,25 @@
 const express = require( 'express')
 const {
-  productsAll,
-  pbyslug,
-  pbysellerid,
-  createp,
-  updatep,
-  delp} = require( "../controllers/productController.js");
+  getAllProducts,
+  getAllProductsBySlug,
+  productBySellerId,
+  createProduct,
+  updateProduct,
+  deleteProduct,
+} = require("../controllers/productController.js");
 
 const ProductRouter = express.Router();
 
 //for fetch or get products = require( db
 ProductRouter.get("/", async (req, res) => {
 
-    const products = await productsAll();
+    const products = await getAllProducts();
     res.send(products);
 });
 
 //get product by slug
 ProductRouter.get('/slug/:slug', async (req, res) => {
-    const product = await pbyslug(req.params.slug);
+    const product = await getAllProductsBySlug(req.params.slug);
     if(product) {
         res.send(product)
     } else {
@@ -29,7 +30,7 @@ ProductRouter.get('/slug/:slug', async (req, res) => {
 
 //get product by sellerId
 ProductRouter.get('/seller/:id', async (req, res) => {
-    const product = await pbysellerid(req.params.id);
+    const product = await productBySellerId(req.params.id);
     if(product) {
         res.send(product)
     } else {
@@ -40,27 +41,27 @@ ProductRouter.get('/seller/:id', async (req, res) => {
 
 //create product
 ProductRouter.post('/add', async(req, res) => {
-    const newProduct = createp(req.body);
+    const newProduct = createProduct(req.body);
         res.status(200).json(newProduct);
 });
 
 
 //for update product
 ProductRouter.put("/update", async(req, res) => {
-    const updateProduct = await updatep(req.body);
+    const updatedProduct = await updateProduct(req.body);
 
-       if (updateProduct) {
+       if (updatedProduct) {
          res.send({
-           _id: updateProduct._id,
-           name: updateProduct.name,
-           slug: updateProduct.slug,
-           category: updateProduct.category,
-           description: updateProduct.description,
-           price: updateProduct.price,
-           image: updateProduct.image,
-           sellerId: updateProduct.sellerId,
-           seller: updateProduct.seller,
-           sellerImage: updateProduct.sellerImage,
+           _id: updatedProduct._id,
+           name: updatedProduct.name,
+           slug: updatedProduct.slug,
+           category: updatedProduct.category,
+           description: updatedProduct.description,
+           price: updatedProduct.price,
+           image: updatedProduct.image,
+           sellerId: updatedProduct.sellerId,
+           seller: updatedProduct.seller,
+           sellerImage: updatedProduct.sellerImage,
          });
        } else {
          res.status(401).send({ message: "Product not Found!" });
@@ -71,7 +72,7 @@ ProductRouter.delete("/delete/:id", async(req, res) => {
 
     try{
 
-        await delp(req);
+        await deleteProduct(req);
         res.status(200).json("Product has been deleted!");
 
 
