@@ -1,12 +1,12 @@
 const express = require( 'express');
-const { getAllCats } = require( "../controllers/categoryController.js");
+const { getAllCategories } = require("../controllers/categoryController.js");
 
 const CategoryRouter = express.Router();
 
 //for fetch or get category = require( db
 CategoryRouter.get("/", async (req, res) => {
 
-    const category = await getAllCats();
+    const category = await getAllCategories();
     res.send(category);
 });
 
