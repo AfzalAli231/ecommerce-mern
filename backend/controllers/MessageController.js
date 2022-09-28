@@ -1,10 +1,10 @@
 const Messages = require( "../models/messageModel.js");
 
-const getMessages = (body, next) => {
+const getMessages = async (req, res, next) => {
   try {
-    const { from, to } = body;
+    const { from , to } = req.body;
 
-    const messages = Messages.find({
+    const messages = await Messages.find({
       users: {
         $all: [from, to],
       },
@@ -16,23 +16,23 @@ const getMessages = (body, next) => {
         message: msg.message.text,
       };
     });
-    return projectedMessages;
+    res.json(projectedMessages);
   } catch (ex) {
     next(ex);
   }
 };
 
-const addMessage = (body, next) => {
+const addMessage = async (req, res, next) => {
   try {
-    const { from, to, message } = body;
-    const data = Messages.create({
+    const { from, to, message } = req.body;
+    const data = await Messages.create({
       message: { text: message },
       users: [from, to],
       sender: from,
     });
 
-    if (data) return { msg: "Message added successfully." };
-    else throw new Error("Failed to add message in database");
+    if (data) return res.json({ msg: "Message added successfully." });
+    else return res.json({ msg: "Failed to add message to the database" });
   } catch (ex) {
     next(ex);
   }
