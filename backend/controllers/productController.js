@@ -1,18 +1,18 @@
 const Product = require("../models/productModel.js");
 
-const productsAll = () => {
+const getAllProducts = () => {
   const products = Product.find();
   return products;
 };
-const pbyslug = (slug) => {
+const getAllProductsBySlug = (slug) => {
   const products = Product.findOne({ slug: slug });
   return products;
 };
-const pbysellerid = (id) => {
+const productBySellerId = (id) => {
   const products = Product.find({ sellerId: id });
   return products;
 };
-const createp = (body) => {
+const createProduct = (body) => {
   const newProduct = new Product(body);
 
   try {
@@ -23,7 +23,7 @@ const createp = (body) => {
   }
 };
 
-const updatep = (body) => {
+const updateProduct = (body) => {
   const product = Product.findById(body.id);
 
   if (product) {
@@ -42,15 +42,15 @@ const updatep = (body) => {
   }
 };
 
-const delp = (req) => {
+const deleteProduct = (req) => {
   const data = Product.findByIdAndDelete(req.params.id);
   return data;
 };
 module.exports = {
-  productsAll,
-  pbyslug,
-  createp,
-  pbysellerid,
-  updatep,
-  delp,
+  getAllProducts,
+  getAllProductsBySlug,
+  createProduct,
+  productBySellerId,
+  updateProduct,
+  deleteProduct,
 };
