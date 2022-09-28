@@ -1,11 +1,11 @@
 const bcrypt = require("bcryptjs");
 const User = require("../models/userModel.js");
 
-const login = (req) => {
+const loginUser = (req) => {
   const user = User.findOne({ email: req.body.email });
   return user;
 };
-const register = (req) => {
+const registerUser = (req) => {
   const newUser = new User({
     name: req.body.name,
     email: req.body.email,
@@ -19,16 +19,16 @@ const register = (req) => {
   const user = newUser.save();
   return user;
 };
-const update = (req) => {
+const updateUser = (req) => {
   const updateUser = User.findByIdAndUpdate(req.body._id, req.body);
   return updateUser;
 };
-const findall = () => {
+const findallUsers = () => {
   const user = User.find({});
   return user;
 };
-const findOne = (id) => {
-  const user = User.findById( id );
+const findOneUser = (id) => {
+  const user = User.findById(id);
   return user;
 };
 const getAllUsersNotMe = async (id, next) => {
@@ -40,10 +40,10 @@ const getAllUsersNotMe = async (id, next) => {
   }
 };
 module.exports = {
-  login,
-  register,
-  update,
-  findall,
-  findOne,
+  loginUser,
+  registerUser,
+  updateUser,
+  findallUsers,
+  findOneUser,
   getAllUsersNotMe,
 };
